@@ -21,7 +21,7 @@ export function init() {
   return {
       count: 0,
       increment: 0,
-      decrement: 0
+      decrement: ''
   };
 }
 
@@ -76,7 +76,7 @@ function* reducer(state=init(), action) {
         return {
             ...state,
             count: state.count - state.decrement,
-            decrement: 0
+            decrement: ''
         }
     default:
       return state;

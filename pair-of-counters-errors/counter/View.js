@@ -11,8 +11,7 @@ import {
   INCREMENT_ASYNC_ODD,
   CAPTURE_FORM_STATE,
   INCREMENTOR,
-  DECREMENTOR,
-  actionTypes
+  DECREMENTOR
 } from './actions';
 
 export default class Counter extends Component {
@@ -22,7 +21,7 @@ export default class Counter extends Component {
       <div>
         <t.form.Form ref='forma' type={Model} options={opcije} value={state} context={{dispatch}}
          onChange={(value) => dispatch({
-             type: CAPTURE_FORM_STATE, payload: [parseInt(value.increment), parseInt(value.decrement)]
+             type: CAPTURE_FORM_STATE, payload: [value.increment, value.decrement]
             }) 
         }
         />

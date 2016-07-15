@@ -11,7 +11,7 @@ export const DECREMENTOR = 'DECREMENTOR';
 export const CAPTURE_SLIDER_STATE = 'CAPTURE_SLIDER_STATE'
 
 
-const Niz = t.tuple([t.Number, t.Number]);
+const Niz = t.tuple([t.Number, t.union([t.Number, t.String])]);
 
 export const actionTypes = {
   [INCREMENT]: t.struct({}, INCREMENT),
