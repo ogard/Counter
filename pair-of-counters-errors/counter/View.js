@@ -1,11 +1,18 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react';
+import t from 'tcomb-form';
+import {Model, opcije} from './model';
+
 
 import {
   INCREMENT,
   DECREMENT,
   INCREMENT_IF_ODD,
   INCREMENT_ASYNC,
-  INCREMENT_ASYNC_ODD
+  INCREMENT_ASYNC_ODD,
+  CAPTURE_FORM_STATE,
+  INCREMENTOR,
+  DECREMENTOR,
+  actionTypes
 } from './actions';
 
 export default class Counter extends Component {
@@ -13,9 +20,13 @@ export default class Counter extends Component {
     const {state, dispatch} = this.props;
     return(
       <div>
+        <t.form.Form ref='forma' type={Model} options={opcije} value={state} context={{dispatch}}
+         onChange={(value) => dispatch({
+             type: CAPTURE_FORM_STATE, payload: [parseInt(value.increment), parseInt(value.decrement)]
+            }) 
+        }
+        />
         <p>
-          {state}
-          {' '}
           <button onClick={() => dispatch({type: INCREMENT})}>+</button>
           {' '}
           <button onClick={() => dispatch({type: DECREMENT})}>-</button>
@@ -26,6 +37,11 @@ export default class Counter extends Component {
           {' '}
           <button onClick={() => dispatch({type: INCREMENT_ASYNC_ODD})}>+ nakon 2 sekunde ako je neparan</button>
         </p>
+        <p>
+            <button onClick={() => dispatch({type: INCREMENTOR})}>INKREMENTIRAJ</button>
+            {' '}
+            <button onClick={() => dispatch({type: DECREMENTOR})}>DEKREMENTIRAJ</button>
+        </p>
       </div>
     );
     
@@ -33,6 +49,6 @@ export default class Counter extends Component {
 }
 
 Counter.propTypes = {
-  state: PropTypes.number.isRequired,
+  state: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired
 }

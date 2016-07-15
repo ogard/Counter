@@ -3,6 +3,7 @@ import {forwardTo} from '../redux-extensions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Slider from 'material-ui/Slider';
 
+
 import Counter from '../counter/';
 
 import {
@@ -17,11 +18,8 @@ export default class PairOfCounters extends Component {
     return (
       <div>
         <Counter.view state={state.counter1} dispatch={forwardTo(dispatch, 'TOP')} />
+        <hr />
         <Counter.view state={state.counter2} dispatch={forwardTo(dispatch, 'BOTTOM')} />
-        <MuiThemeProvider>
-          <Slider/>
-        </MuiThemeProvider>
-        
       </div>
     );
   }
