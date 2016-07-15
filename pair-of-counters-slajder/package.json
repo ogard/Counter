@@ -28,7 +28,9 @@
     "redux-tcomb": "^0.1.6",
     "redux-thunk": "^2.1.0",
     "tcomb": "^2.7.0",
-    "tcomb-validation": "^2.3.0"
+    "tcomb-validation": "^2.3.0",
+    "tcomb-form": "^0.9.8",
+    "material-ui": "^0.15.2"
   },
   "devDependencies": {
     "babel-core": "^6.3.15",
