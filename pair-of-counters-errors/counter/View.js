@@ -4,17 +4,7 @@ import tv from 'tcomb-validation';
 import ModelView from './modelView';
 import Model from './model';
 import TagsComponent from './slider';
-
-// selektor (trenutno nije potreban):
-// const getModelView = (state) => {
-//   const {count, increment, decrement} = state;
-//   return {
-//     count,
-//     increment,
-//     decrement
-//   }
-// };
-
+import { getModelView } from './selectors';
 
 import {
   INCREMENT,
@@ -144,7 +134,7 @@ export default function Counter(props) {
       <t.form.Form
         type={Model}
         options={getOptions2(state) }
-        value={state}
+        value={getModelView(state)}
         context={{ dispatch }}
         onChange={(value) => dispatch({
           type: CAPTURE_FORM_STATE, payload: [Number(value.increment), Number(value.decrement)]
