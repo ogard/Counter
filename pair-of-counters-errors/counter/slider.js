@@ -10,6 +10,7 @@ class TagsComponent extends tf.form.Component {
             return (
                 <div>
                     {SliderFunction(locals.value, locals.context.dispatch)}
+                    {locals.error}
                 </div>
             );
         }

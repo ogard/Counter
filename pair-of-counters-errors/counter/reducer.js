@@ -15,13 +15,13 @@ import {
   actionTypes
 } from './actions';
 
-import {Model} from './model';
+import Model from './model';
 
 export function init() {
   return {
       count: 0,
       increment: 0,
-      decrement: ''
+      decrement: 0
   };
 }
 
@@ -76,7 +76,7 @@ function* reducer(state=init(), action) {
         return {
             ...state,
             count: state.count - state.decrement,
-            decrement: ''
+            decrement: 0
         }
     default:
       return state;

@@ -8,10 +8,9 @@ export const INCREMENT_ASYNC_ODD = 'INCREMENT_ASYNC_ODD';
 export const CAPTURE_FORM_STATE = 'CAPTURE_FORM_STATE'
 export const INCREMENTOR = 'INCREMENTOR';
 export const DECREMENTOR = 'DECREMENTOR';
-export const CAPTURE_SLIDER_STATE = 'CAPTURE_SLIDER_STATE'
+export const CAPTURE_SLIDER_STATE = 'CAPTURE_SLIDER_STATE';
 
-
-const Niz = t.tuple([t.Number, t.union([t.Number, t.String])]);
+const Niz = t.tuple([t.Any, t.Any]);
 
 export const actionTypes = {
   [INCREMENT]: t.struct({}, INCREMENT),

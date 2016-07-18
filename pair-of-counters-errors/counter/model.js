@@ -1,25 +1,10 @@
 import t from 'tcomb';
-import TagsComponent from './slider'
 
-const Model = t.struct({
+const Struktura = t.struct({
     count: t.Number,
     increment: t.Number,
-    decrement: t.union([t.Number, t.String])
+    decrement: t.Number
 });
 
-const opcije = {
-    fields: {
-        count: {
-            label: 'Vrednost brojača je: ',
-            disabled: true
-        },
-        increment: {
-            factory: TagsComponent
-        },
-        decrement: {
-            label: 'Dekrementiraj za: '
-        }
-    }
-}
+export default Struktura;
 
-export {Model, opcije};
