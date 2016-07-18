@@ -27,7 +27,7 @@ import {
   DECREMENTOR
 } from './actions';
 
-
+// prvi nacin (pomocu mapiranja):
 const getOptions1 = (state) => {
   const niz = findErrors(state);
   console.log(niz);
@@ -36,6 +36,8 @@ const getOptions1 = (state) => {
   });
   console.log(noviNiz);
   const opcije = {
+    hasError: (niz.length !== 0 && niz[0].path.length === 0) ? true : false,
+    error: (niz.length !== 0) ? niz[0].message : '',
     fields: {
       count: {
         label: 'Vrednost brojača je: ',
@@ -44,7 +46,7 @@ const getOptions1 = (state) => {
       increment: {
         factory: TagsComponent,
         hasError: noviNiz.map( (element) => {
-          if(element !== 'decrement') {
+          if(element === 'increment') {
             return true;
           }
           else{
@@ -52,7 +54,7 @@ const getOptions1 = (state) => {
           }
           }),
         error: niz.map( (element) => {
-          if (element.path[0] !== 'decrement') {
+          if (element.path[0] === 'increment') {
             return element.message;
           }
           else {
@@ -86,35 +88,46 @@ const getOptions1 = (state) => {
 }
 
 // drugi nacin (pomocu f-je reduce):
-// const getOptions2 = (state) => {
-//   const niz = findErrors(state);
-//   console.log(niz);
-//   return niz.reduce( (prev, curr) => {
-//     prev.fields[curr.path[0]] =  {
-//       hasError: true,
-//       error: curr.message,
-//       factory: TagsComponent
-//     }
-//     return prev;
-//   },
-//   {
-//     fields: {
-//       count: {
-//         label: 'Vrednost brojača je: ',
-//         disabled: true
-//       },
-//       increment: {
-//         factory: TagsComponent,
-//         hasError: false
-//       },
-//       decrement: {
-//         label: 'Dekrementiraj za: ',
-//         hasError: false
-//       }
-//     }
-//   }
-//   );
-// }
+const getOptions2 = (state) => {
+  const niz = findErrors(state);
+  console.log(niz);
+  return niz.reduce( (prev, curr) => {
+    if (curr.path[0] === 'increment') {
+      prev.fields[curr.path[0]] = {
+        hasError: true,
+        error: curr.message,
+        factory: TagsComponent
+      }
+    }
+    else {
+      prev.fields[curr.path[0]] = {
+        label: 'Dekrementiraj za: ',
+        hasError: true,
+        error: curr.message
+      }
+    }
+    return prev;
+  },
+  {
+    hasError: (niz.length !== 0 && niz[0].path.length === 0) ? true : false,
+    error: (niz.length !== 0) ? niz[0].message : '',
+    fields: {
+      count: {
+        label: 'Vrednost brojača je: ',
+        disabled: true
+      },
+      increment: {
+        factory: TagsComponent,
+        hasError: false
+      },
+      decrement: {
+        label: 'Dekrementiraj za: ',
+        hasError: false
+      }
+    }
+  }
+  );
+}
 
 const findErrors = (state) => {
   const validacija = tv.validate(state, ModelView);
@@ -124,42 +137,38 @@ const findErrors = (state) => {
   return nizGresaka;
 }
 
-export default class Counter extends Component {
-  render() {
-    const {state, dispatch} = this.props;
-    return(
-      <div>
-        <t.form.Form 
-          ref='forma' 
-          type={Model} 
-          options={getOptions1(state)} 
-          value={state} 
-          context={{dispatch}}
-          onChange={(value) => dispatch({
-             type: CAPTURE_FORM_STATE, payload: [Number(value.increment), Number(value.decrement)]
-            }) 
-          }
+export default function Counter(props) {
+  const {state, dispatch} = props;
+  return (
+    <div>
+      <t.form.Form
+        type={Model}
+        options={getOptions2(state) }
+        value={state}
+        context={{ dispatch }}
+        onChange={(value) => dispatch({
+          type: CAPTURE_FORM_STATE, payload: [Number(value.increment), Number(value.decrement)]
+        })
+        }
         />
-        <p>
-          <button onClick={() => dispatch({type: INCREMENT})}>+</button>
-          {' '}
-          <button onClick={() => dispatch({type: DECREMENT})}>-</button>
-          {' '}
-          <button onClick={() => dispatch({type: INCREMENT_IF_ODD})}>+ ako je neparan</button>
-          {' '}
-          <button onClick={() => dispatch({type: INCREMENT_ASYNC})}>+ nakon 2 sekunde</button>
-          {' '}
-          <button onClick={() => dispatch({type: INCREMENT_ASYNC_ODD})}>+ nakon 2 sekunde ako je neparan</button>
-        </p>
-        <p>
-            <button onClick={() => dispatch({type: INCREMENTOR})}>INKREMENTIRAJ</button>
-            {' '}
-            <button onClick={() => dispatch({type: DECREMENTOR})}>DEKREMENTIRAJ</button>
-        </p>
-      </div>
-    );
-    
-  }
+      <p>
+        <button onClick={() => dispatch({ type: INCREMENT }) }>+</button>
+        {' '}
+        <button onClick={() => dispatch({ type: DECREMENT }) }>-</button>
+        {' '}
+        <button onClick={() => dispatch({ type: INCREMENT_IF_ODD }) }>+ ako je neparan</button>
+        {' '}
+        <button onClick={() => dispatch({ type: INCREMENT_ASYNC }) }>+ nakon 2 sekunde</button>
+        {' '}
+        <button onClick={() => dispatch({ type: INCREMENT_ASYNC_ODD }) }>+ nakon 2 sekunde ako je neparan</button>
+      </p>
+      <p>
+        <button onClick={() => dispatch({ type: INCREMENTOR }) }>INKREMENTIRAJ</button>
+        {' '}
+        <button onClick={() => dispatch({ type: DECREMENTOR }) }>DEKREMENTIRAJ</button>
+      </p>
+    </div>
+  );
 }
 
 Counter.propTypes = {
