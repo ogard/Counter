@@ -1,0 +1,138 @@
+JS principi:
+
+JS je compiled (kompajlirani) jezik - to znaci da ima svoj kompajler koji se startuje svaki put kada se kod izvrsava.
+Kod interpretiranih jezika kompajler ide kroz kod od vrha ka dnu, liniju po liniju i istovremeno vrsi egzekuciju koda.
+Za razliku od ovakvih jezika, kod JS prvo JS kompajler inicijalno prodje kroz kod, pa jos jednom prodje i trazi block scopes i na kraju
+tek treci put kad prodje onda vrsi egzekuciju koda. Ovo u principu znaci da kada sa kod izvrsava kompajler je svjestan naredne linije
+ili narednih linija, iako jos nije dosao do njih.
+JS nije kompajliran na isti nacin kao drugi kompajlirani jezici (C++ ili Java). Osnovna razlika je u tome sto ne saljemo binary compiled forme naseg programa.
+Napr. mi kompajliramo C++ u .exe i to saljemo dalje, Javu kompajlujemo u bite code i to saljemo.
+Za razliku od ovakvih vrsta kompajliranih jezika, u JS mi saljemo source kod, koji se kompajlira svaki put kada je pokrenut.
+
+JS kompajler trazi block of scopes ali u JS to su function scopes. Kod JS najmanji bolock of scopes je function scope.
+Kompajliranje je slozen i kompleksan algoritam. Medjutim, jedan vazan dio (faza) kompajliranja je pronalazenje deklaracija promjenljivih i funkcija i njihovo
+stavljanje u odgovarajuce scope slotove.
+
+JS engine: 
+
+JS engine ce pri prvom prolasku kroz kod, traziti deklaracije za f-je ili varijable na osnovu njihovih identifikatora (naziva)
+i pitaiti u kojem scopu se one nalaze. U drugoj fazi kompajliranja se vezi dodjela vrijednosti. U ovoj fazi postoje dve biten stvari:
+LHS(lefthand side reference) i RHZ(rightside refernce). LHS je target (identifikator), RHF (tip poda taka) je source. LHS se desava tokom compiled time-a, a
+RHS tokom runtime-a.
+
+Lexical scope:
+
+JS koristi lexical scope mehanizam. Sustina ovog mehanizma su pravila trazenja deklaracije varijabli po scopovima.
+Deklaracija se trazi do prvog match-a. Pocinje se od unutrasnjeg scopa i ide se ka spolja. Ako nismo u stict mod i pri trazenju dodjemo do global scopa i tamo ne
+nadjemo deklaraciju varijable koju trazimo, tada ce nam JS engine deklarisati tu varijablu za nas u global scopu.
+
+Hoisting:
+
+Proces kompajliranja se ugrubo sastoji od 3 faze: prvo ide declaration faza, onda assignment faza i na kraju egzecution faza.
+U procesu kompajliranja deklaracije f-ja i varijabli se pozicioniraju na vrh koda i to se zove hoisting.
+Ali pravilo je da se prvo deklarisu f-je, pa onda varijable.
+Primjer:
+function-declaration: function proba (a, b, c) {...}
+function expression: var d = function () {...}
+Deklaracije funkcija se prvo hoistiraju, pa onda deklaracije varijabli (pa samim tim i function expression-a)   
+
+
+Block scope (ES6):
+
+Osim function scopa postoji i block scope koji se aktivira koriscenjem definicije za varijablu let.
+let zaljepi varijablu za scope bloka u kojem je napisana, a ne za scope f-je u kojoj je blok napisan.
+Primjer: Kada unutar neke funkcije imamo blok tipa (if, for, while), i kada unutar ovakvog bloka za definiciju varijable koristimo let, tada je ta varijabla
+dostupan samo u scou tog bloka, ne i van njega, tj. nije dostupna u scopu f-je unutar koje se nalazi blok.
+Za razliku od let kad bi koristili var, tada bi varijabla definisana unutar scopa bloka koji se nalazi unutar scopa f-je bila dostupna u i scopu f-je.
+Kada se let koristi u petljama, pri svakoj iteraciji varijabla se rebinduje za petlju.
+Problem sa let (let ne radi hoisting) i rjesenje: let se uvijek mora definisati na pocetku bloka kako bi bila dostupna do kraja tog bloka
+Blokovi se kreiraju na sledeci nacin: funkcijama, try-catch, {let...}
+undefined znaci da postoji deklasizana varijabla koja ima undefined vrijednost, odnosno vrijednost joj je prazna.
+
+this scope mehanizam:
+
+This scope mehanizam je nezavistan od lexical scope mehanizama. Nemoguce je miksovati (kombinovati) ova dva mehanizma.
+Svaka f-ja kada se izvrsava ima referencu na njen trenutni kontekst. Kontekst se sastoji od dosta stvari (lokalne varijable, stek, ...)
+i izmedju ostalog i this binding-a. this mehanizam nam govori u
+Funkcionisanje this mehanizam zavisi samo od toga kako izgleda poziv funkcije (callsite). 
+Pravila (poredjana su po redu):
+4) default binding: 
+	** na callsite-u funkcija se poziva na standardan nacin ili se koristi IIF, primjer: foo(); **
+	ako smo u strikt modu this uzima vridnost undefined
+	ako nismo u strikt modu this se bind-uje za globalni objekat
+	U sustini this = undefined ili this = global
+3) implicit binding:
+	** na callsite-u se poziva property objekta (a taj property je referenca na f-ju), primjer: obj.foo(); **
+	taj objekat postaje this
+	U sustini this = contextObject
+2) explicit binding:
+	** na callsite-u se koristi call ili apply, primjer: foo.call(obj) **
+	Objekat koji se prosledjuje f-ji call ili apply postaje this
+	U sustini this = obj
+1) 	hard binding
+	funkciju pregazimo sa za novom definicijom u kojoj koristimo f-ju call. Na ovaj bilo kako da pozovemo originalnu f-ju, njen this ce uvijek biti bindovan za 
+	objekat koji se prosledjuje f-ji call
+	Primjer:
+		var origin = foo;
+		foo = function () { origin.call(obj1); };
+		foo(); --> obj1.property
+		foo.call(obj2); --> obj2.property
+	Ovo je ugradjeno u JS, kao protype bind:
+		foobar = foo.bind(obj1)
+		foobar(); --> obj1.property
+		foobar(obj2); --> obj1.property
+	Hard binding se postize i sa keyword new.
+	
+Keyword new:
+
+JS nema klase, keyword new nema veze sa instansiranjem kalasa. Ima veze sa this scope mehanizmom i to sa hard binding-om.
+Primjer: 
+var baz = new foo();
+Ovo znaci da postoji constructor call funkcije foo i dogadjaju se sledece stvari:
+1) formira se novi prazan objekat
+2) ovaj objekat se linkuje (povezuje sa nekim drugim objektom)
+3) vaj objekat se binduje kao this za fu-ju koja se poziva sa keyword new
+4) ako pozvana f-ja originalno ne vraca nikakvu vrijednost onda ce se na kraj te f-je pojaviti: return this.
+	Ovo znaci da ce se kreirani novi objekat vratiiti kao vrijednost koju vraca pozvana f-ja.
+Keyword new overriduje sva prethodna pravila this scope mehanizma.
+
+Closure:
+
+Closure je mogucnost f-je da zapamti i pristupi svome lexical scopu iako se ta f-ja izvrsava izvan svog lexical scopa.
+Primjer:
+function foo () {
+	var bar = 'bar';
+	function bar () {
+		console.log(bar);
+	}
+	bam(baz);
+}
+function bam(baz) {
+	baz(); // 'bar'
+}
+foo();
+
+Prototype mehanizam:
+ 
+Svaki objekat koji je kreiran u JS je kreiran pomocu konstruktor f-je. Konstruktor pravi objekat koji je povezan sa svojim prototipom.
+Konstruktor je funkcija koja se poziva sa keyword new ispred nje! Konstruktor u istovremeno vrsi kreiranje i inicijalizaciju!
+[[Prototype]] je link od jednog ka drugom objektu, koji se stvara putem 2 mehanizma:
+- Object.create - kreiralink od jednog ka drugom objektu
+- new
+Ako trazimo properti nekog objekta koji referencira na neki iznad objekat,a on nema taj properti, tada preko [[Property]] linkova 
+taj properti se trazi dalje u lancu iznad
+Na sta pojazije [[Prototype]] objekta otktivamo na sledece nacijne: pomocu: obj.__proto__, Object.getPrototypeOF(obj), obj.constructor.prototype
+
+inheritance = copying
+
+Za razliku od drugih jezika (class orieneted kao C++, Java) kod kojih klase predstavljaju templejt za child objekte, i kod kojih se vrsi kopiranje propertija.
+Kod Js nema kopiranja, vec se objekti linkuju medjusobno - delegacija u prototype lancu (behaviour delegation). Sto znaci ako child polomi nogu i otac ce polomiti  nogu.
+
+
+
+
+	
+
+	
+
+
