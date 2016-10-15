@@ -1,0 +1,105 @@
+#scroll-style::-webkit-scrollbar
+{
+    height: 8px;
+	background-color: #eee;
+}
+#scroll-style::-webkit-scrollbar-thumb
+{
+    background-color:#bdbdbd;
+    border-radius:10px;
+    border:1px solid #333333;
+}
+#scroll-style::-webkit-scrollbar-thumb:hover
+{
+    background-color:#a8a8a8;
+    border:1px solid #333333;
+}
+#scroll-style::-webkit-scrollbar-thumb:active
+{
+    background-color:#939393;
+    border:1px solid #333333;
+}
+#scroll-style::-webkit-scrollbar-track
+{
+    background-color:#d3d3d3;
+    border:1px gray solid;
+    border-radius:10px;
+}
+
+
+
+#scroll-style::-moz-scrollbar
+{
+    height: 8px;
+	background-color: #eee;
+}
+#scroll-style::-moz-scrollbar-thumb
+{
+    background-color:#bdbdbd;
+    border-radius:10px;
+    border:1px solid #333333;
+}
+#scroll-style::-moz-scrollbar-thumb:hover
+{
+    background-color:#a8a8a8;
+    border:1px solid #333333;
+}
+#scroll-style::-moz-scrollbar-thumb:active
+{
+    background-color:#939393;
+    border:1px solid #333333;
+}
+#scroll-style::-moz-scrollbar-track
+{
+    background-color:#d3d3d3;
+    border:1px gray solid;
+    border-radius:10px;
+}
+
+
+
+#scroll-style::-ms-scrollbar
+{
+    height: 8px;
+	background-color: #eee;
+}
+#scroll-style::-ms-scrollbar-thumb
+{
+    background-color:#bdbdbd;
+    border-radius:10px;
+    border:1px solid #333333;
+}
+#scroll-style::-ms-scrollbar-thumb:hover
+{
+    background-color:#a8a8a8;
+    border:1px solid #333333;
+}
+#scroll-style::-ms-scrollbar-thumb:active
+{
+    background-color:#939393;
+    border:1px solid #333333;
+}
+#scroll-style::-ms-scrollbar-track
+{
+    background-color:#d3d3d3;
+    border:1px gray solid;
+    border-radius:10px;
+}
+
+
+
+/*#style-2::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}*/
+
+/*#style-2::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #D62929;
+}*/

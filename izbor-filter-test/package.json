@@ -1,0 +1,65 @@
+{
+  "name": "test-environment",
+  "version": "0.0.0",
+  "description": "Osnovno testno okruzenje",
+  "scripts": {
+    "start": "node server.js",
+    "test": "cross-env NODE_ENV=test mocha --recursive --compilers js:babel-register",
+    "test:watch": "npm test -- --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reactjs/redux.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/reactjs/redux/issues"
+  },
+  "homepage": "http://redux.js.org",
+  "dependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.16.0",
+    "babel-polyfill": "^6.16.0",
+    "babel-runtime": "^6.9.2",
+    "bootstrap": "^3.3.7",
+    "css-loader": "^0.23.1",
+    "file-loader": "^0.9.0",
+    "font-awesome": "^4.6.3",
+    "font-awesome-webpack": "0.0.4",
+    "less": "^2.7.1",
+    "less-loader": "^2.2.3",
+    "material-ui": "^0.16.0",
+    "react": "^15.3.2",
+    "react-custom-scrollbars": "^4.0.0",
+    "react-dom": "^15.3.2",
+    "react-font-awesome": "^1.0.3",
+    "react-redux": "^4.4.5",
+    "react-tap-event-plugin": "^1.0.0",
+    "redux": "^3.6.0",
+    "redux-side-effects": "^1.1.1",
+    "redux-thunk": "^2.1.0",
+    "style-loader": "^0.13.1",
+    "tcomb": "^3.2.15",
+    "tcomb-validation": "^3.2.2",
+    "url-loader": "^0.5.7"
+  },
+  "devDependencies": {
+    "babel-core": "^6.17.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-react-hmre": "^1.1.1",
+    "babel-preset-stage-2": "^6.17.0",
+    "babel-preset-stage-3": "^6.17.0",
+    "babel-register": "^6.16.3",
+    "cross-env": "^3.0.0",
+    "enzyme": "^2.4.1",
+    "expect": "^1.20.2",
+    "express": "^4.14.0",
+    "mocha": "^3.1.0",
+    "node-libs-browser": "^1.0.0",
+    "react-addons-test-utils": "^15.3.2",
+    "webpack": "^1.13.2",
+    "webpack-dev-middleware": "^1.8.3",
+    "webpack-hot-middleware": "^2.12.2"
+  }
+}
